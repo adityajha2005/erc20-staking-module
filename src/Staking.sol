@@ -57,7 +57,7 @@ contract Staking is Ownable, Pausable, ReentrancyGuard{
         Staker storage user = stakers[msg.sender];
         require(user.amountStaked>0,"Not staked");
         require(block.timestamp - user.lastUpdated >= lockDuration, "Not enough time passed");
-        claimReward();
+        // claimReward();
         uint256 stakedAmount = user.amountStaked;
         token.safeTransfer(msg.sender, stakedAmount); //transfer staked amount
         emit Withdraw(msg.sender, stakedAmount);

@@ -51,4 +51,16 @@ contract StakingTest is Test {
         uint256 finalBalance = reward+initialBalance;
         assertEq(token.balanceOf(address(this)),finalBalance);
     }
+
+    function test_withdraw() public{
+        uint256 amount = 1 ether;
+        staking.stake(amount);
+        vm.warp(block.timestamp + 8 days);
+        uint256 reward = staking.calculateReward(address(this));
+        // staking.claimReward();
+        uint256 initialBalance = token.balanceOf(address(this));
+        staking.withdraw();
+        uint256 finalBalance = token.balanceOf(address(this));
+        assertEq(finalBalance - initialBalance, amount);
+    }
 }
