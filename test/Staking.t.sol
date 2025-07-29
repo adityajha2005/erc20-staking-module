@@ -63,4 +63,10 @@ contract StakingTest is Test {
         uint256 finalBalance = token.balanceOf(address(this));
         assertEq(finalBalance - initialBalance, amount);
     }
+    function test_pause_staking_should_fail() public {
+    staking.pause();
+    vm.expectRevert(Pausable.EnforcedPause.selector);
+    staking.stake(1 ether);
+    }
+
 }
